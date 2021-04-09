@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitcoin Price</title>
+    <style type="text/css">
+        #data {
+            width: 400px;
+            border: 1px dashed black;
+            font-size: 20px;
+            text-align: center;
+            margin: 0 auto;
+            margin-top: 50px;
+            padding: 10px;
+        }
+
+        #logo {
+            width: 320px;
+            height: 320px;
+            margin: 0 auto;
+            margin-top: 50px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <img id="logo" src="https://help.mobiletopup.com/wp-content/uploads/crypto-320x320.png">
+    <div id="data">
+        <script type="text/javascript">
+        let xmlhttp = new XMLHttpRequest();
+        let url = "https://api.coindesk.com/v1/bpi/currentprice.json";
+
+        xmlhttp.onreadystatechange = function() {
+            if(this.readyState == 4 && this.status == 200){
+                let json = JSON.parse(this.responseText);
+                parseJson(json);
+            }
+        };
+
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
+
+        function parseJson(json){
+            let time = "<b>Last Updated: " + json["time"]["updated"] + "</b>";
+            let usdValue = "1 BTC = $" + json["bpi"]["USD"]["rate"];
+            let gbpValue = "1 BTC = &pound;" + json["bpi"]["GBP"]["rate"];
+            let euroValue = "1 BTC = &euro;" + json["bpi"]["EUR"]["rate"];
+            
+            document.getElementById("data").innerHTML = time + "<br>" + usdValue + "<br>" + euroValue + "<br>" + gbpValue;
+        }
+
+        </script>
+    </div>
+</body>
+</html>
